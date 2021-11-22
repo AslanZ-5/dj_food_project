@@ -30,3 +30,11 @@ def article_search(request):
 def detail(request, id):
     obj = Article.objects.get(id=id)
     return render(request, 'detail.html', {'object': obj})
+
+
+def article_create_view(request):
+    if request.method == 'POST':
+        Article.objects.create(title=request.POST.get('title'),content=request.POST.get('content'))
+    context = {}
+
+    return render(request,'create.html',context=context)

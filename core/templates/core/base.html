@@ -8,7 +8,12 @@
     <title>Document</title>
 </head>
 <body>
-<h1>base</h1>
+<h3>Search</h3>
+<form action="{% url 'search' %}">
+    <input type="text" name="query">
+    <input type="submit">
+</form>
+
 {% block content %}
 {% endblock %}
 </body>

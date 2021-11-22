@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Create</h1>
+<form action="{% url 'create' %}" method="post">
+    {% csrf_token %}
+   <div> <input type="text" name="title" placeholder="Title"></div>
+    <div>
+    <textarea name="content" placeholder="Content"></textarea></div>
+    <input type="submit" value="Create article">
+</form>
+
+{% endblock %}

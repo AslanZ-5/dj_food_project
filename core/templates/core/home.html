@@ -1,10 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<form action="{% url 'search' %}">
-    <input type="text" name="query">
-    <input type="submit">
-</form>
+
 {% if objects %}
 {% for object in objects %}
 <h1 style="color:red;">Hello {{object.title}}</h1>
