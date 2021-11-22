@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'core',
+    'accounts'
+
 ]
 
 MIDDLEWARE = [
@@ -57,6 +59,7 @@ TEMPLATES = [
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
         'DIRS': [
             'C:/Users/zurab/dj_p/dev/djsite/core/templates/core',
+            'C:/Users/zurab/dj_p/dev/djsite/accounts/templates/accounts',
             BASE_DIR / 'templates'
         ],
         'APP_DIRS': True,

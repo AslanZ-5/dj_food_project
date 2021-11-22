@@ -13,7 +13,15 @@
     <input type="text" name="query">
     <input type="submit">
 </form>
+<br>
+{% if user.is_authenticated %}
+<form action="{% url 'logout' %}" method="post">
+    {% csrf_token %}
+    <input type="submit" value="logout">
+</form>
 
+{% endif %}
+<br>
 {% block content %}
 {% endblock %}
 </body>
