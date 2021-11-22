@@ -13,10 +13,20 @@ a = random.randint(10, 10000)
 
 
 def home(request):
-    return HttpResponse(render_to_string('core/home.html', {'title': Article.objects.get(id=1).title,
-                                                            'content': Article.objects.get(id=1).content}))
+    context = {'objects': Article.objects.all()}
+    return HttpResponse(render_to_string('core/home.html', context=context))
 
 
-def detail(request,id):
+def article_search(request):
+    try:
+        query = int(request.GET.get('query'))
+    except:
+        query = None
+    print(query)
+    context = {'object':Article.objects.get(id=query)}
+    return render(request, 'home.html', context=context)
+
+
+def detail(request, id):
     obj = Article.objects.get(id=id)
-    return render(request,'detail.html', {'object':obj})
+    return render(request, 'detail.html', {'object': obj})

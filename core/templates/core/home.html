@@ -1,6 +1,18 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1 style="color:red;">Hello {{title}}</h1>
-<h3>{{content}}</h3>
+<form action="{% url 'search' %}">
+    <input type="text" name="query">
+    <input type="submit">
+</form>
+{% if objects %}
+{% for object in objects %}
+<h1 style="color:red;">Hello {{object.title}}</h1>
+<h3>{{object.content}}</h3>
+{% endfor %}
+{% endif %}
+{% if object %}
+<h1 style="color:green;">Hello {{object.title}}</h1>
+<h3>{{object.content}}</h3>
+{% endif %}
 {% endblock %}
