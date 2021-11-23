@@ -8,5 +8,6 @@ class ArticleForm(forms.Form):
     def clean(self):
         print(self.cleaned_data.get('title'))
         if self.cleaned_data.get('title').startswith('T'):
-            raise forms.ValidationError('The title can\'t starts with capital "T"')
+            self.add_error('title', 'This title can\'t starts with capital "T"')
+            # raise forms.ValidationError('The title can\'t starts with capital "T"')
         return self.cleaned_data

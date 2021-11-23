@@ -35,12 +35,10 @@ def detail(request, id):
 
 @login_required
 def article_create_view(request):
-    context = {'form': ArticleForm}
+    form = ArticleForm(request.POST)
+    context = {'form':form}
     if request.method == 'POST':
-        form = ArticleForm(request.POST)
-        context = {'form': form}
         if form.is_valid():
-
             Article.objects.create(title=request.POST.get('title'), content=request.POST.get('content'))
 
 
