@@ -2,6 +2,8 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from .models import Article
 from django.template.loader import render_to_string
+from django.contrib.auth.decorators import login_required
+from .forms import ArticleForm
 import random
 
 a = random.randint(10, 10000)
@@ -14,7 +16,7 @@ a = random.randint(10, 10000)
 
 def home(request):
     context = {'objects': Article.objects.all()}
-    return render(request,'core/home.html', context=context)
+    return render(request, 'core/home.html', context=context)
 
 
 def article_search(request):
@@ -22,7 +24,7 @@ def article_search(request):
         query = int(request.GET.get('query'))
     except:
         query = None
-    context = {'object':Article.objects.get(id=query)}
+    context = {'object': Article.objects.get(id=query)}
     return render(request, 'home.html', context=context)
 
 
@@ -31,9 +33,16 @@ def detail(request, id):
     return render(request, 'detail.html', {'object': obj})
 
 
+@login_required
 def article_create_view(request):
+    context = {'form': ArticleForm}
     if request.method == 'POST':
-        Article.objects.create(title=request.POST.get('title'),content=request.POST.get('content'))
-    context = {}
+        form = ArticleForm(request.POST)
+        context = {'form': form}
+        if form.is_valid():
 
-    return render(request,'create.html',context=context)
+            Article.objects.create(title=request.POST.get('title'), content=request.POST.get('content'))
+
+
+
+    return render(request, 'create.html', context=context)
