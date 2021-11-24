@@ -1,14 +1,13 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Login</h1>
+<h1>Register</h1>
 {% if error %}
     <p style="color:red;">{{error}}</p>
 {% endif %}
-<form action="{% url 'login' %}" method="post">
+<form action="{% url 'register' %}" method="post">
     {% csrf_token %}
-   <div> <input type="text" name="username" placeholder="username"></div>
-   <div> <input type="password" name="password" placeholder="password"></div>
+   {{form.as_p}}
 
     <input type="submit" value="Login">
 </form>

@@ -3,17 +3,18 @@ from .models import Article
 
 
 class ArticleForm(forms.ModelForm):
-    title = forms.CharField()
-    content = forms.CharField()
-
     class Meta:
         model = Article
         fields = ['title', 'content']
+
     def clean(self):
-        data = self.cleaned_data.get('title')
-        qs = Article.objects.filter(title__icontains = data)
+        data = self.cleaned_data
+        title = data.get('title')
+        qs = Article.objects.filter(title=title)
+        print(qs)
         if qs.exists():
-            self.add_error('title','this title already taken')
+            self.add_error('title', 'this title already taken')
+        return data
 
 # class ArticleForms(forms.Form):
 #     title = forms.CharField()
