@@ -2,7 +2,13 @@ from django.shortcuts import render
 from django.shortcuts import redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
 
+
+def register(request):
+    form = UserCreationForm()
+    context = {'form':form}
+    return render(request, 'register.html', context=context)
 
 def login_view(request):
     if request.method == 'POST':
