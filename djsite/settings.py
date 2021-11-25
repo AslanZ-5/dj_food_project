@@ -24,9 +24,8 @@ SECRET_KEY = os.environ.get('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.environ.get('DEBUG') == str(1)
-# print(os.environ.get('MY_SECRET_WORD'))
-print(os.environ.get('DEBUG'))
-print(os.environ.get('SECRET_KEY'))
+
+
 ALLOWED_HOSTS = ['127.0.0.1','localhost']
 
 
