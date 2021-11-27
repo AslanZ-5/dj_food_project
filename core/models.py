@@ -20,8 +20,11 @@ class Article(models.Model):
 
 def article_pre_save(sender, instance, *args, **kwargs):
     print('pre_save')
-    print(args, kwargs)
-    instance.slug = slugify(instance.title)
+    slug = slugify(instance.title)
+    qs = Article.objects.filter(slug=slug).exclude(id=instance.id)
+    if qs.exists:
+        slug = f'{slug} - {qs.count() + 1}'
+    instance.slug = slug
 
 
 pre_save.connect(article_pre_save, sender=Article)
@@ -29,9 +32,10 @@ pre_save.connect(article_pre_save, sender=Article)
 
 def article_post_save(created, instance, *args, **kwargs):
     print('post_save')
-    print(args, kwargs)
+
     if created:
         instance.slug = slugify(instance.title)
-    
+        instance.save()
+
 
 post_save.connect(article_post_save, sender=Article)
