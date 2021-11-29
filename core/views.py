@@ -5,7 +5,7 @@ from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from .forms import ArticleForm
 import random
-
+from django.http import Http404
 a = random.randint(10, 10000)
 
 
@@ -28,8 +28,11 @@ def article_search(request):
     return render(request, 'home.html', context=context)
 
 
-def detail(request, id):
-    obj = Article.objects.get(id=id)
+def detail(request, slug):
+    try:
+        obj = Article.objects.get(slug=slug)
+    except:
+        raise Http404
     return render(request, 'detail.html', {'object': obj})
 
 
