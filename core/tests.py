@@ -1,12 +1,14 @@
 from django.test import TestCase
 from .models import Article
 from django.utils.text import slugify
-
+from .utile import slugify_instance_title
 
 class ArticleTestCase(TestCase):
 
     def setUp(self):
-        for i in range(5):
+        self.number_of_articles = 50
+        for i in range(self.number_of_articles):
+
             Article.objects.create(title='hello world', content=f'ads{i}')
 
     def test_queryset_exists(self):
@@ -15,7 +17,7 @@ class ArticleTestCase(TestCase):
 
     def test_queryset_count(self):
         qs = Article.objects.all()
-        self.assertEqual(qs.count(), 5)
+        self.assertEqual(qs.count(), self.number_of_articles)
 
     def test_slug_first(self):
         obj = Article.objects.all().first()
@@ -29,3 +31,13 @@ class ArticleTestCase(TestCase):
             title = slugify(i.title)
             slug = i.slug
             self.assertEqual(slug,f'{title}-{i.id}')
+
+    def test_slugify_instance_title(self):
+        obj = Article.objects.all().last()
+        slugify_instance_title(obj,save=False)
+        self.assertEqual(obj.slug,f'{slugify(obj.title)}-{obj.id}')
+
+    def test_of_uniqueness_all_slugs(self):
+        slug_list = Article.objects.all().values_list('slug',flat=True)
+        unique_slug_list = set(slug_list)
+        self.assertEqual(len(unique_slug_list),len(slug_list))
