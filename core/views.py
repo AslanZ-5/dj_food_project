@@ -1,5 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
+from django.db.models import Q
 from django.http import HttpResponse
 from .models import Article
 from django.template.loader import render_to_string
@@ -28,7 +29,7 @@ def article_search(request):
         query = None
     qs = Article.objects.all()
     if query is not None:
-        qs = Article.objects.filter(title__icontains=query)
+        qs = Article.objects.filter(Q(title__icontains=query)|Q(content__icontains=query))
     context = {'objects': qs }
 
     return render(request, 'search.html', context=context)
