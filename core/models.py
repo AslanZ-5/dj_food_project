@@ -4,38 +4,36 @@ from django.utils.text import slugify
 from django.db.models.signals import post_save, pre_save
 import random
 from .utile import slugify_instance_title
+from django.urls import reverse
+
 
 class Article(models.Model):
     title = models.CharField(max_length=150)
-    slug = models.SlugField(max_length=150,unique=True, null=True,blank=True)
+    slug = models.SlugField(max_length=150, unique=True, null=True, blank=True)
     content = models.TextField()
     added_date = models.DateTimeField(auto_now_add=True)
     updated_date = models.DateTimeField(auto_now=True)
     publish = models.DateField(default=timezone.now)
 
+    def get_absolute_url(self):
+        return reverse("detail", kwargs={'slug': self.slug})
     # def save(self, *args, **kwargs):
     #     if self.slug is None:
     #         self.slug = slugify(self.title)
     #     super().save(*args, **kwargs)
 
 
-
 def article_pre_save(sender, instance, *args, **kwargs):
-
-
     if instance.slug is None:
         slugify_instance_title(instance)
-
 
 
 pre_save.connect(article_pre_save, sender=Article)
 
 
 def article_post_save(created, instance, *args, **kwargs):
-
-
     if created:
-        slugify_instance_title(instance,save=True)
+        slugify_instance_title(instance, save=True)
 
 
 post_save.connect(article_post_save, sender=Article)

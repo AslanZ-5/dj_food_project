@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.shortcuts import redirect
 from django.http import HttpResponse
 from .models import Article
 from django.template.loader import render_to_string
@@ -6,6 +7,7 @@ from django.contrib.auth.decorators import login_required
 from .forms import ArticleForm
 import random
 from django.http import Http404
+
 a = random.randint(10, 10000)
 
 
@@ -39,11 +41,12 @@ def detail(request, slug):
 @login_required
 def article_create_view(request):
     form = ArticleForm(request.POST)
-    context = {'form':form}
+    context = {'form': form}
     if request.method == 'POST':
         if form.is_valid():
             # Article.objects.create(title=request.POST.get('title'), content=request.POST.get('content'))
-            form.save()
+            obj = form.save()
             context['form'] = ArticleForm()
+            return redirect(obj.get_absolute_url())
 
     return render(request, 'create.html', context=context)
