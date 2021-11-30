@@ -23,11 +23,15 @@ def home(request):
 
 def article_search(request):
     try:
-        query = int(request.GET.get('query'))
+        query = request.GET.get('query')
     except:
         query = None
-    context = {'object': Article.objects.get(id=query)}
-    return render(request, 'home.html', context=context)
+    qs = Article.objects.all()
+    if query is not None:
+        qs = Article.objects.filter(title__icontains=query)
+    context = {'objects': qs }
+
+    return render(request, 'search.html', context=context)
 
 
 def detail(request, slug):
