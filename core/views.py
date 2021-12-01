@@ -12,10 +12,6 @@ from django.http import Http404
 a = random.randint(10, 10000)
 
 
-# h = f'''
-#     <h1> Helloewe - {a}<h1>
-# '''
-
 
 def home(request):
     context = {'objects': Article.objects.all()}
