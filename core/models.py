@@ -8,6 +8,8 @@ from .utile import slugify_instance_title
 from django.urls import reverse
 
 
+
+
 class ArticleQuerySet(models.QuerySet):
     def search(self, query=None):
         if query is None or query == '':
@@ -25,6 +27,7 @@ class ArticleManager(models.Manager):
 
 
 class Article(models.Model):
+    user = models.ForeignKey('auth.User',blank=True,null=True,on_delete=models.SET_NULL)
     title = models.CharField(max_length=150)
     slug = models.SlugField(max_length=150, unique=True, null=True, blank=True)
     content = models.TextField()
