@@ -8,14 +8,20 @@ from .utile import slugify_instance_title
 from django.urls import reverse
 
 
+class ArticleQuerySet(models.QuerySet):
+    def search(self, query=None):
+        if query is None or query == '':
+            return self.none()
+        lookups = Q(title__icontains=query) | Q(content__icontains=query)
+        return self.filter(lookups)
 
 
 class ArticleManager(models.Manager):
+    def get_queryset(self):
+        return ArticleQuerySet(self.model, using=self._db)
+
     def search(self, query=None):
-        if query is None or query == '':
-            return self.get_queryset().none()
-        lookup = Q(title__icontains=query) | Q(content__icontains=query)
-        return self.get_queryset().filter(lookup)
+        return self.get_queryset().search(query=query)
 
 
 class Article(models.Model):
@@ -26,7 +32,6 @@ class Article(models.Model):
     updated_date = models.DateTimeField(auto_now=True)
     publish = models.DateField(default=timezone.now)
     objects = ArticleManager()
-
 
     def get_absolute_url(self):
         return reverse("detail", kwargs={'slug': self.slug})
