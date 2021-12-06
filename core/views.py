@@ -25,7 +25,7 @@ def article_search(request):
         query = None
     qs = Article.objects.all()
     if query is not None:
-        qs = Article.objects.filter(Q(title__icontains=query)|Q(content__icontains=query))
+        qs = Article.objects.search(query)
     context = {'objects': qs }
 
     return render(request, 'search.html', context=context)
