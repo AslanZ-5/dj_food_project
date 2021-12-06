@@ -37,7 +37,16 @@ class RecipeTestCase(TestCase):
         qs = User.objects.all()
         self.assertEqual(qs.count(), 1)
 
-    def test_user_recipe_count(self):
+    def test_user_recipe_reverse_count(self):
         qs = self.user_a.recipe_set.all()
-        self.assertEqual(qs.count(), 0)
-        
+        self.assertEqual(qs.count(), 2)
+
+    def test_user_forward_count(self):
+        user = self.user_a
+        qs = Recipe.objects.filter(user=user)
+        self.assertEqual(qs.count(),2)
+
+    def test_recipe_ingredient_reverse_count(self):
+        recipe = self.recipe_a
+        qs = recipe.ingredient_set.all()
+        self.assertEqual(qs.count(),1)
