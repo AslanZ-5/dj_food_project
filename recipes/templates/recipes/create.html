@@ -2,6 +2,13 @@
     Create Recipe
 
 </h1>
+<p style="color:green">{{message}}</p>
 
-
+<form  method="post">
+    {% csrf_token %}
 {{ form.as_p }}
+    {% for form2 in form_2 %}
+{{ form2.as_p }}
+{% endfor %}
+    <button type="submit"> add </button>
+    </form>
