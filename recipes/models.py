@@ -4,6 +4,7 @@ from django.contrib.auth import get_user_model
 from .validator import validator_unit_of_measure
 from .utils import number_str_to_float
 import pint
+from django.shortcuts import reverse
 
 
 class Recipe(models.Model):
@@ -14,6 +15,9 @@ class Recipe(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
+
+    def get_absolute_url(self):
+        return reverse('detail',kwargs={'id':self.pk})
 
 
 class Ingredient(models.Model):

@@ -1,0 +1,9 @@
+<h1>recipes list</h1>
+{{object_list.count}}
+
+{% for i in object_list %}
+    <p>{{ i.name }}</p>
+    <p>{{ i.description }}</p>
+    <p>{{ i.direction }}</p>
+
+{% endfor %}
