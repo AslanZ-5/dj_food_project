@@ -7,8 +7,6 @@
 <form  method="post">
     {% csrf_token %}
 {{ form.as_p }}
-    {% for form2 in form_2 %}
-{{ form2.as_p }}
-{% endfor %}
+{{ form_2.as_p }}
     <button type="submit"> add </button>
     </form>
