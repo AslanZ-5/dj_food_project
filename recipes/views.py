@@ -46,8 +46,7 @@ def recipe_update_view(request, id=None):
         'form': form,
         'form_2': form_set
     }
-    if request.method == 'POST':
-        print(request.POST)
+    print(form.is_valid(),form_set.is_valid())
     if form.is_valid() and form_set.is_valid():
         parent = form.save(commit=False)
         parent.save()
@@ -56,4 +55,6 @@ def recipe_update_view(request, id=None):
             child.recipe = parent
             child.save()
         context['message'] = 'Data is updated'
+    if request.htmx:
+        return render(request,'recipes/partial/forms.html',context)
     return render(request,'recipes/update.html',context)

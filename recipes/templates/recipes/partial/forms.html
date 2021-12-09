@@ -1,0 +1,21 @@
+
+
+
+<form  action="." method="post" hx-post="." hx-swap="outerHTML">
+    <p style="color:green">{{message}}</p>
+    {% csrf_token %}
+    <div>
+        {{ form.as_p }}
+    </div>
+    <div id="ingredient-form-list">
+        {{ form_2.management_form }}
+    {% for form in form_2 %}
+
+    <div class="ingredient-form">{{ form.as_p }}</div>
+    {% endfor %}
+</div>
+    <div id="empty-form" class="hidden">{{form_2.empty_form}}"</div>
+    <button id="add-more" type="button" > Add more</button>
+
+    <button type="submit"> Save </button>
+    </form>

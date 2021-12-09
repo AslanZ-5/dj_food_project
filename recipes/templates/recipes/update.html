@@ -1,3 +1,6 @@
+{% extends 'base.html' %}
+
+{% block content %}
 <h1>
     Update Recipe
 
@@ -9,23 +12,8 @@
     }
 </style>
 <p style="color:green">{{message}}</p>
+{% include 'recipes/partial/forms.html' %}
 
-<form  method="post">
-    {% csrf_token %}
-    <div>
-        {{ form.as_p }}
-    </div>
-    <div id="ingredient-form-list">
-    {% for form in form_2 %}
-
-    <div class="ingredient-form">{{ form.as_p }}</div>
-    {% endfor %}
-</div>
-    <div id="empty-form" class="hidden">{{form_2.empty_form}}"</div>
-    <button id="add-more" type="button" > Add more</button>
-
-    <button type="submit"> Save </button>
-    </form>
 
 
 <script>
@@ -51,3 +39,4 @@
         formCopyTarget.append(emptyFormEl)
     };
 </script>
+{% endblock %}
