@@ -6,7 +6,16 @@
 
 <form  method="post">
     {% csrf_token %}
-{{ form.as_p }}
+    {% for field in form%}
+    {{ field.label_tag }}
+    {% if field.help_text %}
+    {{ field.help_text}}
+    {% endif %}
+    {{ field }}<br>
+    {% endfor %}
+
 {{ form_2.as_p }}
-    <button type="submit"> add </button>
+
+    {{ form_2.empty_form }}
+    <button type="submit"> Save </button>
     </form>

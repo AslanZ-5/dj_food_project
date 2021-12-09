@@ -1,0 +1,53 @@
+<h1>
+    Update Recipe
+
+</h1>
+
+<style>
+    .hidden {
+    display: none
+    }
+</style>
+<p style="color:green">{{message}}</p>
+
+<form  method="post">
+    {% csrf_token %}
+    <div>
+        {{ form.as_p }}
+    </div>
+    <div id="ingredient-form-list">
+    {% for form in form_2 %}
+
+    <div class="ingredient-form">{{ form.as_p }}</div>
+    {% endfor %}
+</div>
+    <div id="empty-form" class="hidden">{{form_2.empty_form}}"</div>
+    <button id="add-more" type="button" > Add more</button>
+
+    <button type="submit"> Save </button>
+    </form>
+
+
+<script>
+
+    const addMoreBtn = document.getElementById('add-more')
+    const totalNewForms = document.getElementById('id_form-TOTAL_FORMS')
+
+    addMoreBtn.addEventListener('click',add_new_form)
+    function add_new_form(event) {
+        if (event) {
+            event.preventDefault()
+        }
+        const currentIngredientForms = document.getElementsByClassName('ingredient-form')
+        let currentFormCount = currentIngredientForms.length
+
+        const formCopyTarget = document.getElementById('ingredient-form-list')
+        const emptyFormEl = document.getElementById('empty-form').cloneNode(true)
+        emptyFormEl.setAttribute('class', 'ingredient-form')
+        emptyFormEl.setAttribute('id',`form-${currentFormCount}`)
+        const regex = new RegExp('__prefix__','g')
+        emptyFormEl.innerHTML = emptyFormEl.innerHTML.replace(regex,currentFormCount)
+<!--        totalNewForms.setAttribute('value', currentFormCount +1)-->
+        formCopyTarget.append(emptyFormEl)
+    };
+</script>
