@@ -57,9 +57,11 @@ def recipe_create_view(request):
 def recipe_update_view(request, id=None):
     obj = get_object_or_404(Recipe, id=id, user=request.user)
     form = RecipeForm(request.POST or None, instance=obj)
+    new_ingredient_url = reverse('hx-ingredient-create', kwargs={'parent_id':obj.id})
     context = {
         'form': form,
         'object': obj,
+        'new_ingredient_url':new_ingredient_url,
 
     }
 
@@ -89,7 +91,10 @@ def recipe_ingredient_update_hx_view(request, parent_id=None, id=None):
         except:
             instance = None
     form = IngredientForm(request.POST or None, instance=instance)
+    url = instance.get_hx_edit_url() if instance else reverse('hx-ingredient-create', kwargs={'parent_id':parent_obj.id})
+
     context = {
+        'url':url,
         'object': instance,
         'form': form
     }
@@ -98,7 +103,6 @@ def recipe_ingredient_update_hx_view(request, parent_id=None, id=None):
         if instance is None:
             new_obj.recipe = parent_obj
         new_obj.save()
-        context['object'] = instance
+        context['object'] = new_obj
         return render(request, 'recipes/partial/ingredient-inline.html', context)
-
     return render(request, 'recipes/partial/ingredient-form.html', context)
