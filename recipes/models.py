@@ -22,6 +22,8 @@ class Recipe(models.Model):
     def get_hx_url(self):
         return reverse('hx-detail', kwargs={'id': self.pk})
 
+    def get_ingredient_children(self):
+        return self.ingredient_set.all()
 
 class Ingredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)

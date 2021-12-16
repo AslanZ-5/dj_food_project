@@ -1,9 +1,10 @@
-from django.shortcuts import render, redirect, get_object_or_404,reverse
+from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib.auth.decorators import login_required
 from .forms import RecipeForm, IngredientForm
 from .models import Recipe, Ingredient
 from django.forms import modelformset_factory
-from django.http import HttpResponse
+from django.http import HttpResponse, Http404
+
 
 @login_required
 def recipe_list_view(request):
@@ -16,7 +17,7 @@ def recipe_list_view(request):
 
 @login_required
 def recipe_detail_view(request, id=None):
-    hx_url = reverse('hx-detail',kwargs={'id':id})
+    hx_url = reverse('hx-detail', kwargs={'id': id})
     context = {
         'hx_url': hx_url,
     }
@@ -25,6 +26,8 @@ def recipe_detail_view(request, id=None):
 
 @login_required
 def recipe_detail_hx_view(request, id=None):
+    if not request.htmx:
+        raise Http404
     try:
         obj = Recipe.objects.get(id=id, user=request.user)
     except:
@@ -32,7 +35,6 @@ def recipe_detail_hx_view(request, id=None):
 
     if obj is None:
         return HttpResponse('Not found.')
-    obj = get_object_or_404(Recipe, id=id, user=request.user)
     context = {
         'obj': obj,
     }
@@ -55,22 +57,48 @@ def recipe_create_view(request):
 def recipe_update_view(request, id=None):
     obj = get_object_or_404(Recipe, id=id, user=request.user)
     form = RecipeForm(request.POST or None, instance=obj)
-    ingredient_form_set = modelformset_factory(Ingredient, form=IngredientForm, extra=0)
-    qs = obj.ingredient_set.all()
-    form_set = ingredient_form_set(request.POST or None, queryset=qs)
     context = {
         'form': form,
-        'form_2': form_set
+        'object': obj,
+
     }
-    print(form.is_valid(), form_set.is_valid())
-    if form.is_valid() and form_set.is_valid():
-        parent = form.save(commit=False)
-        parent.save()
-        for ing in form_set:
-            child = ing.save(commit=False)
-            child.recipe = parent
-            child.save()
+
+    if form.is_valid():
+        form.save()
         context['message'] = 'Data is updated'
     if request.htmx:
         return render(request, 'recipes/partial/forms.html', context)
     return render(request, 'recipes/update.html', context)
+
+
+@login_required
+def recipe_ingredient_update_hx_view(request, parent_id=None, id=None):
+    if not request.htmx:
+        raise Http404
+    try:
+        parent_obj = Recipe.objects.get(id=parent_id, user=request.user)
+    except:
+        parent_obj = None
+
+    if parent_obj is None:
+        return HttpResponse('Not found.')
+    instance = None
+    if id is not None:
+        try:
+            instance = Ingredient.objects.get(recipe=parent_obj, id=id)
+        except:
+            instance = None
+    form = IngredientForm(request.POST or None, instance=instance)
+    context = {
+        'object': instance,
+        'form': form
+    }
+    if form.is_valid():
+        new_obj = form.save(commit=False)
+        if instance is None:
+            new_obj.recipe = parent_obj
+        new_obj.save()
+        context['object'] = instance
+        return render(request, 'recipes/partial/ingredient-inline.html', context)
+
+    return render(request, 'recipes/partial/ingredient-form.html', context)
