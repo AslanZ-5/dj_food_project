@@ -1,9 +1,16 @@
-<h1>recipes list</h1>
-{{object_list.count}}
+{% extends 'base.html' %}
 
+{% block content %}
+<h1>recipes list</h1>
+<h2><a href="{% url 'create' %}"> Add new</a></h2>
 {% for i in object_list %}
-    <p>{{ i.name }}</p>
-    <p>{{ i.description }}</p>
-    <p>{{ i.direction }}</p>
+<ul>
+    <li><a href="{% url 'detail' i.id %}">{{ i.name }}</a></li>
+</ul>
+   
+
+
 
 {% endfor %}
+
+{% endblock %}
