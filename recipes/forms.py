@@ -16,7 +16,15 @@ class RecipeForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         for field in self.fields:
-            self.fields[field].widget.attrs.update({'placeholder': f'Recipe {field}'})
+            new_data = {
+                'placeholder': f'Recipe {field}',
+                'class': 'form-control',
+                'hx-post': '.',
+                'hx-trigger': 'keyup changed delay:500ms',
+                'hx-target': '#recipe-container',
+                'hx-swap':'innerHTML'
+            }
+            self.fields[field].widget.attrs.update(new_data)
 
         # self.fields['name'].label = 'Recipe Name'
         # self.fields['name'].widget.attrs.update({'class':'form_control_22',"placeholder":'Recipe Name'})
