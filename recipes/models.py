@@ -25,6 +25,7 @@ class Recipe(models.Model):
     def get_ingredient_children(self):
         return self.ingredient_set.all()
 
+
 class Ingredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     name = models.CharField(max_length=220)
@@ -59,3 +60,6 @@ class Ingredient(models.Model):
         else:
             self.quantity_as_float = None
         super().save(*args, **kwargs)
+
+    def get_hx_edit_url(self):
+        return reverse('hx-ingredient-update', kwargs={'id': self.pk, 'parent_id': self.recipe.id})
