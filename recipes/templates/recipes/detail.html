@@ -1,5 +1,11 @@
-<h1>detail</h1>
+{% extends 'base.html' %}
 
-    <p>{{ obj.name }}</p>
-    <p>{{ obj.description }}</p>
-    <p>{{ obj.direction }}</p>
+{% block content %}
+
+
+  <div hx-get="{{hx_url}}" hx-trigger="revealed">
+ <div class="htmx-indicator">Loading...</div>
+</div>
+
+{% endblock %}
+

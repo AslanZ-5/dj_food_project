@@ -1,0 +1,146 @@
+[
+{
+    "model": "recipes.recipe",
+    "pk": 1,
+    "fields": {
+        "user": 1,
+        "name": "dddnewhtmndxASASDDD6",
+        "description": "ddd11",
+        "direction": "dddd11",
+        "timestamp": "2021-12-06T13:08:49.665Z",
+        "updated": "2021-12-16T07:01:46.567Z",
+        "active": true
+    }
+},
+{
+    "model": "recipes.recipe",
+    "pk": 2,
+    "fields": {
+        "user": 2,
+        "name": "Chicken",
+        "description": "godo sset dsfsdfer",
+        "direction": "sdf swje fwklr jqlwkj elkjl;kefjdlkvje kljqwelkj klerj lkerjlkg j",
+        "timestamp": "2021-12-06T13:21:52.588Z",
+        "updated": "2021-12-06T13:21:52.588Z",
+        "active": true
+    }
+},
+{
+    "model": "recipes.recipe",
+    "pk": 3,
+    "fields": {
+        "user": 1,
+        "name": "ddre",
+        "description": "fired eggs with onion",
+        "direction": "fire eggs with onion and butter",
+        "timestamp": "2021-12-07T07:32:45.581Z",
+        "updated": "2021-12-09T13:21:23.676Z",
+        "active": true
+    }
+},
+{
+    "model": "recipes.ingredient",
+    "pk": 1,
+    "fields": {
+        "recipe": 2,
+        "name": "Gurrile chicken",
+        "quantity": "1/2",
+        "quantity_as_float": 0.5,
+        "unit": "ounces",
+        "description": "",
+        "direction": "",
+        "timestamp": "2021-12-06T13:21:52.592Z",
+        "updated": "2021-12-07T07:07:04.382Z"
+    }
+},
+{
+    "model": "recipes.ingredient",
+    "pk": 2,
+    "fields": {
+        "recipe": 2,
+        "name": "scw",
+        "quantity": "1/3",
+        "quantity_as_float": 0.3333333333333333,
+        "unit": "pound",
+        "description": "dd",
+        "direction": "dd",
+        "timestamp": "2021-12-07T13:54:19.936Z",
+        "updated": "2021-12-07T13:54:19.936Z"
+    }
+},
+{
+    "model": "recipes.ingredient",
+    "pk": 3,
+    "fields": {
+        "recipe": 2,
+        "name": "re",
+        "quantity": "33 1/2",
+        "quantity_as_float": 33.5,
+        "unit": "pound",
+        "description": "f",
+        "direction": "f",
+        "timestamp": "2021-12-07T13:54:36.334Z",
+        "updated": "2021-12-07T13:54:38.946Z"
+    }
+},
+{
+    "model": "recipes.ingredient",
+    "pk": 4,
+    "fields": {
+        "recipe": 1,
+        "name": "pasta",
+        "quantity": "666 1/2",
+        "quantity_as_float": 666.5,
+        "unit": "pound",
+        "description": "eeeee",
+        "direction": "ee",
+        "timestamp": "2021-12-07T14:36:16.599Z",
+        "updated": "2021-12-16T07:01:46.583Z"
+    }
+},
+{
+    "model": "recipes.ingredient",
+    "pk": 5,
+    "fields": {
+        "recipe": 1,
+        "name": "potatos",
+        "quantity": "1/9",
+        "quantity_as_float": 0.1111111111111111,
+        "unit": "ounces",
+        "description": "ewrewr",
+        "direction": "werewrwe",
+        "timestamp": "2021-12-07T14:36:32.608Z",
+        "updated": "2021-12-16T07:01:46.599Z"
+    }
+},
+{
+    "model": "recipes.ingredient",
+    "pk": 6,
+    "fields": {
+        "recipe": 3,
+        "name": "Aslan Zurabov",
+        "quantity": "1/2",
+        "quantity_as_float": 0.5,
+        "unit": "pounds",
+        "description": "",
+        "direction": "",
+        "timestamp": "2021-12-09T13:21:07.676Z",
+        "updated": "2021-12-09T13:21:07.676Z"
+    }
+},
+{
+    "model": "recipes.ingredient",
+    "pk": 7,
+    "fields": {
+        "recipe": 3,
+        "name": "isa salah",
+        "quantity": "3",
+        "quantity_as_float": 3.0,
+        "unit": "pounds",
+        "description": "",
+        "direction": "",
+        "timestamp": "2021-12-09T13:21:23.678Z",
+        "updated": "2021-12-09T13:21:23.678Z"
+    }
+}
+]

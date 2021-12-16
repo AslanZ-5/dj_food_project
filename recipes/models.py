@@ -17,7 +17,10 @@ class Recipe(models.Model):
     active = models.BooleanField(default=True)
 
     def get_absolute_url(self):
-        return reverse('detail',kwargs={'id':self.pk})
+        return reverse('detail', kwargs={'id': self.pk})
+
+    def get_hx_url(self):
+        return reverse('hx-detail', kwargs={'id': self.pk})
 
 
 class Ingredient(models.Model):
