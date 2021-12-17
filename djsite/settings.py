@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'accounts',
     'recipes',
     'django_htmx',
+    'search',
 
 ]
 
