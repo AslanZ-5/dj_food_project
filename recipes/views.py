@@ -44,13 +44,20 @@ def recipe_detail_hx_view(request, id=None):
 @login_required
 def recipe_create_view(request):
     form = RecipeForm(request.POST or None)
+    print(bool(form.instance.id))
     if form.is_valid():
         obj = form.save(commit=False)
         obj.user = request.user
         obj.save()
+        if request.htmx:
+            headers = {
+                "HX-Redirect":obj.get_absolute_url()
+            }
+            return HttpResponse("Created", headers=headers)
+
         return redirect(obj.get_absolute_url())
 
-    return render(request, 'recipes/create.html', {'form': form})
+    return render(request, 'recipes/create-update.html', {'form': form})
 
 
 @login_required
@@ -70,7 +77,7 @@ def recipe_update_view(request, id=None):
         context['message'] = 'Data is updated'
     if request.htmx:
         return render(request, 'recipes/partial/forms.html', context)
-    return render(request, 'recipes/update.html', context)
+    return render(request, 'recipes/create-update.html', context)
 
 
 @login_required

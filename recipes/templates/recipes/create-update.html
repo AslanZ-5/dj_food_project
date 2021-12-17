@@ -1,20 +1,25 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>
-    Update Recipe
 
-</h1>
 
 <style>
     .hidden {
     display: none
     }
 </style>
+{% if object.id %}
+<h1>Update Recipe</h1>
+{% else %}
+<h1>Create Recipe</h1>
+{% endif %}
 <p style="color:green">{{message}}</p>
+
 {% include 'recipes/partial/forms.html' %}
 
+{% if object %}
 <h2>Ingredient</h2>
+{% endif %}
 {% for ingredient in object.get_ingredient_children %}
     {% include 'recipes/partial/ingredient_inline.html' with object=ingredient %}
 {% endfor %}
