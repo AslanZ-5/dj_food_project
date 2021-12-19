@@ -12,7 +12,9 @@ class RecipeQuerySet(models.QuerySet):
     def search(self, query=None):
         if query is None or query == "":
             return self.none()  # return empty queryset
-        lookups = Q(name__icontains=query) | Q(description__icontains=query)
+        lookups = (Q(name__icontains=query) |
+                   Q(description__icontains=query)|
+                   Q(direction__icontains=query))
         return self.filter(lookups)
 
 
@@ -32,7 +34,11 @@ class Recipe(models.Model):
     timestamp = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
     active = models.BooleanField(default=True)
+    objects = RecipeManager()
 
+    @property
+    def title(self):
+        return self.name
     def get_absolute_url(self):
         return reverse('detail', kwargs={'id': self.pk})
 

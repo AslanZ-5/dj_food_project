@@ -5,4 +5,6 @@ Searched for {{ request.GET.q }} under {{ request.GET.type|title }}
 {% empty %}
 <h1>No results found </h1>
 {% endfor %}
-
+ {% if request.htmx %}
+<a href="/search/?q={{request.GET.q}}&type={{request.GET.type }}"> View All</a>
+{% endif %}

@@ -36,6 +36,10 @@ class Article(models.Model):
     publish = models.DateField(default=timezone.now)
     objects = ArticleManager()
 
+    @property
+    def name(self):
+        return self.title
+
     def get_absolute_url(self):
         return reverse("detail", kwargs={'slug': self.slug})
     # def save(self, *args, **kwargs):
