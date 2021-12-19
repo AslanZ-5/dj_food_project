@@ -1,4 +1,7 @@
 from django.shortcuts import render
+from core.models import Article
+from recipes.models import Recipe
+
 
 
 def search_view(request):

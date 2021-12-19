@@ -4,7 +4,24 @@ from django.contrib.auth import get_user_model
 from .validator import validator_unit_of_measure
 from .utils import number_str_to_float
 import pint
+from django.db.models import Q
 from django.shortcuts import reverse
+
+
+class RecipeQuerySet(models.QuerySet):
+    def search(self, query=None):
+        if query is None or query == "":
+            return self.none()  # return empty queryset
+        lookups = Q(name__icontains=query) | Q(description__icontains=query)
+        return self.filter(lookups)
+
+
+class RecipeManager(models.Manager):
+    def get_queryset(self):
+        return RecipeQuerySet(self.model, using=self._db)
+
+    def search(self, query=None):
+        return self.get_queryset().search(query=query)
 
 
 class Recipe(models.Model):
