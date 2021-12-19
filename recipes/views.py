@@ -6,6 +6,7 @@ from django.forms import modelformset_factory
 from django.http import HttpResponse, Http404
 
 
+
 @login_required
 def recipe_list_view(request):
     qs = Recipe.objects.filter(user=request.user)
@@ -14,6 +15,17 @@ def recipe_list_view(request):
     }
     return render(request, 'recipes/list.html', context)
 
+@login_required
+def recipe_list_view(request,id=None):
+    obj = get_object_or_404(Recipe,id=id, user=request.user)
+    if request.method == 'POST':
+        obj.delete()
+        success_url = reverse('list')
+        return redirect(success_url)
+    context = {
+        'obj':obj
+    }
+    return render(request, 'recipes/list.html', context)
 
 @login_required
 def recipe_detail_view(request, id=None):
