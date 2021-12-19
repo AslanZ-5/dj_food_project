@@ -1,3 +1,4 @@
+{% load static %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -7,9 +8,10 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <script src="https://unpkg.com/htmx.org@1.6.1"></script>
+    <link rel="stylesheet" href="recipes\static\recipes\hx-rec.css">
 
 </head>
-<body>
+<body >
 <h1>{{user}}</h1>
 <h3>Search</h3>
 {% include 'search/search-form.html' %}
