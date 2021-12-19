@@ -1,5 +1,5 @@
    <div id="ingredient-{{ object.id }}">
         {{ingredient.name }} - {{ ingredient.quantity }} {{ ingredient.unit }}
        <button hx-trigger="click" hx-get="{{ object.get_hx_edit_url }}" hx-target="#ingredient-{{object.id}}">Edit</button>
-       <button><a href="{{ingredient.get_delete_url}}">Delete</a></button>
+       <button><a hx-post="{{ingredient.get_delete_url}}" hx-confirm="Delete ingredient?" hx-trigger="click" hx-target="#ingredient-{{ object.id }}" hx-swap="outerHTML" href="{{ingredient.get_delete_url}}">Delete</a></button>
     </div>
