@@ -6,5 +6,5 @@ urlpatterns = [
     path('',include('core.urls')),
     path('recipes/',include('recipes.urls')),
     path('accounts/',include('accounts.urls')),
-    path('search', search_view, name='hx-search')
+    path('search/', search_view, name='search')
 ]

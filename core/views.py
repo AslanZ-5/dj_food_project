@@ -18,17 +18,17 @@ def home(request):
     return render(request, 'core/home.html', context=context)
 
 
-def article_search(request):
-    try:
-        query = request.GET.get('query')
-    except:
-        query = None
-    qs = Article.objects.all()
-    if query is not None:
-        qs = Article.objects.search(query)
-    context = {'objects': qs }
-
-    return render(request, 'search.html', context=context)
+# def article_search(request):
+#     try:
+#         query = request.GET.get('q')
+#     except:
+#         query = None
+#     qs = Article.objects.all()
+#     if query is not None:
+#         qs = Article.objects.search(query)
+#     context = {'objects': qs }
+#
+#     return render(request, 'search.html', context=context)
 
 
 def detail(request, slug):
