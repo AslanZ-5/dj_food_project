@@ -13,7 +13,7 @@ class RecipeQuerySet(models.QuerySet):
         if query is None or query == "":
             return self.none()  # return empty queryset
         lookups = (Q(name__icontains=query) |
-                   Q(description__icontains=query)|
+                   Q(description__icontains=query) |
                    Q(direction__icontains=query))
         return self.filter(lookups)
 
@@ -39,11 +39,18 @@ class Recipe(models.Model):
     @property
     def title(self):
         return self.name
+
     def get_absolute_url(self):
         return reverse('detail', kwargs={'id': self.pk})
 
     def get_hx_url(self):
         return reverse('hx-detail', kwargs={'id': self.pk})
+
+    def get_edit_url(self):
+        return reverse('update', kwargs={"id": self.pk})
+
+    def get_delete_url(self):
+        return reverse('delete', kwargs={"id": self.pk})
 
     def get_ingredient_children(self):
         return self.ingredient_set.all()
@@ -86,3 +93,6 @@ class Ingredient(models.Model):
 
     def get_hx_edit_url(self):
         return reverse('hx-ingredient-update', kwargs={'id': self.pk, 'parent_id': self.recipe.id})
+
+    def get_delete_url(self):
+        return reverse('ingredient-delete', kwargs={'parent_id': self.recipe.id, "id": self.pk})

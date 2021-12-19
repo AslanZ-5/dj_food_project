@@ -3,3 +3,12 @@
     <p>{{ obj.name }}</p>
     <p>{{ obj.description }}</p>
     <p>{{ obj.direction }}</p>
+<smal>
+    <a href="{{obj.get_edit_url}}">Edit</a>
+    <a href="{{obj.get_delete_url}}">Delete</a>
+</smal>
+
+<h3>Ingredients</h3>
+{% for ingredient in obj.get_ingredient_children %}
+    {% include 'recipes/partial/ingredient_inline.html' with object=ingredient %}
+{% endfor %}

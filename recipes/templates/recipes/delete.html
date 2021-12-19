@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+{% if obj %}
+<form action="." method="post">
+    {% csrf_token %}
+    <p>Are you sure you want to delete {{ obj.name }}? </p>
+    <button type="submit"> Yes, delete.</button>
+</form>
+
+{% endif %}
+
+{% endblock %}
