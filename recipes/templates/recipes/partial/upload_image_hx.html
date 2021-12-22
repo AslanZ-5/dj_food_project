@@ -1,0 +1,18 @@
+<form id="image-upload-form" action="." method="post" enctype="multipart/form-data"
+      hx-post="{{ request.path }}"
+      hx-encoding="multipart/form-data"
+
+>
+    {% csrf_token %}
+   {{ form.as_p }}
+    <div>
+        <progress value="0" max="100" id="image-upload-progress"></progress>
+    </div>
+    <input type="submit" value="Upload img">
+</form>
+
+<script>
+        htmx.on('#image-upload-form', 'htmx:xhr:progress', function(evt) {
+          htmx.find('#image-upload-progress').setAttribute('value', evt.detail.loaded/evt.detail.total * 100)
+        });
+    </script>
