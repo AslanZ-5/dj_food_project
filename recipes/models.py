@@ -6,6 +6,8 @@ from .utils import number_str_to_float
 import pint
 from django.db.models import Q
 from django.shortcuts import reverse
+import pathlib
+import uuid
 
 
 class RecipeQuerySet(models.QuerySet):
@@ -56,9 +58,16 @@ class Recipe(models.Model):
         return self.ingredient_set.all()
 
 
+# making filename unique
+def recipe_ingredient_image_upload_handler(instance, filename):
+    fpath = pathlib.Path(filename)
+    new_fname = str(uuid.uuid1())
+    return f'recipes/{new_fname}{fpath.suffix}'
+
+
 class IngredientImage(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
-    image = models.ImageField(upload_to='recipes/')
+    image = models.ImageField(upload_to=recipe_ingredient_image_upload_handler)
 
 
 class Ingredient(models.Model):
