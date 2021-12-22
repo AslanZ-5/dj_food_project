@@ -55,7 +55,9 @@ class Recipe(models.Model):
     def get_ingredient_children(self):
         return self.ingredient_set.all()
 
-
+class IngredientImage(models.Model):
+    recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
+    image = models.FileField(upload_to='recipes/')
 class Ingredient(models.Model):
     recipe = models.ForeignKey(Recipe, on_delete=models.CASCADE)
     name = models.CharField(max_length=220)
