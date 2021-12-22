@@ -1,6 +1,6 @@
 from django.shortcuts import render, redirect, get_object_or_404, reverse
 from django.contrib.auth.decorators import login_required
-from .forms import RecipeForm, IngredientForm
+from .forms import RecipeForm, IngredientForm, IngredientImageForm
 from .models import Recipe, Ingredient
 from django.forms import modelformset_factory
 from django.http import HttpResponse, Http404
@@ -162,3 +162,18 @@ def recipe_ingredient_update_hx_view(request, parent_id=None, id=None):
         context['object'] = new_obj
         return render(request, 'recipes/partial/ingredient-inline.html', context)
     return render(request, 'recipes/partial/ingredient-form.html', context)
+
+
+def ingredient_image_upload_view(request,parent_id):
+    try:
+        parent_obj = Recipe.objects.get(id=parent_id,  user=request.user)
+    except:
+        parent_obj = None
+    if parent_obj is None:
+        raise Http404
+    form = IngredientImageForm(request.POST or None, request.FILES or None)
+    if form.is_valid():
+        obj = form.save(commit=False)
+        obj.recipe = parent_obj
+        obj.save()
+    return render(request, 'upload_image.html', {'form':form})
