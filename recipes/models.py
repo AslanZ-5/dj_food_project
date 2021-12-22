@@ -60,6 +60,14 @@ class Recipe(models.Model):
 
 # making filename unique
 def recipe_ingredient_image_upload_handler(instance, filename):
+    """
+    This function must accept two arguments and return a Unix-style path (with forward slashes)
+    to be passed along to the storage system. The two arguments are:
+
+        - instance   An instance of the model where the Filefield is defined
+        - filename  The filename that was originally given to the file. This may or may not
+            be taken into account when determining the final destination path
+     """
     fpath = pathlib.Path(filename)
     new_fname = str(uuid.uuid1())
     return f'recipes/{new_fname}{fpath.suffix}'
