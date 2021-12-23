@@ -14,9 +14,11 @@
 <h1>Create Recipe</h1>
 {% endif %}
 <p style="color:green">{{message}}</p>
-
+<div class="row">
+    <div class="col-12 col-md-8">
 {% include 'recipes/partial/forms.html' %}
-
+</div>
+    <div class="col-12 col-md-4">
 {% if object %}
 <h2>Ingredient</h2>
 {% endif %}
@@ -29,7 +31,8 @@
         <button hx-get="{{new_ingredient_url}}" hx-trigger="click" hx-target="#ingredient-create" hx-swap="beforeend">Add New</button>
 
 {% endif %}
-
+        </div>
+</div>
 <script>
 
 

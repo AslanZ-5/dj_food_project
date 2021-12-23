@@ -1,6 +1,6 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
+<nav class="navbar navbar-expand-lg navbar-light bg-light mb-5">
   <div class="container-fluid">
-    <a class="navbar-brand" href="#">Navbar</a>
+    <a class="navbar-brand" href="{% url 'home' %}">Navbar</a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -23,6 +23,13 @@
             <li><a class="dropdown-item" href="#">Something else here</a></li>
           </ul>
         </li>
+
+
+      </ul>
+      {% if  user.is_authenticated %}
+      {% include 'search/search-form.html' %}
+      {% endif %}
+     <ul class="nav navbar-nav navbar-right">
         <li class="nav-item">
           {% if  user.is_authenticated %}
           <form id="my_form" class="d-flex" action="{% url 'logout' %}" method="post">
@@ -35,8 +42,13 @@
               <a class="nav-link" href="{% url 'login' %}">login</a>
           {% endif %}
         </li>
+         <li class="nav-item">
+          <p class="nav-link">{{user}} </p>
+        </li>
       </ul>
-      {% include 'search/search-form.html' %}
+
+
+
     </div>
   </div>
 </nav>
