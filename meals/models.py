@@ -36,6 +36,12 @@ class MealManager(models.Manager):
     def get_queryset(self):
         return MealQuerySet(self.model, using=self._db)
 
+    def by_user_id(self, user_id):
+        return self.get_queryset().by_user_id(user_id)
+
+    def by_user(self, user):
+        return self.get_queryset().by_user(user)
+
     def toggle_in_queue(self, user_id, recipe_id):
         qs = self.get_queryset().all().by_user_id(user_id)
         already_queued = qs.in_queue(recipe_id)
