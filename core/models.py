@@ -6,8 +6,7 @@ import random
 from django.db.models import Q
 from .utile import slugify_instance_title
 from django.urls import reverse
-
-
+from meals.signals import meal_added, meal_removed
 
 
 class ArticleQuerySet(models.QuerySet):
@@ -27,7 +26,7 @@ class ArticleManager(models.Manager):
 
 
 class Article(models.Model):
-    user = models.ForeignKey('auth.User',blank=True,null=True,on_delete=models.SET_NULL)
+    user = models.ForeignKey('auth.User', blank=True, null=True, on_delete=models.SET_NULL)
     title = models.CharField(max_length=150)
     slug = models.SlugField(max_length=150, unique=True, null=True, blank=True)
     content = models.TextField()
@@ -62,3 +61,17 @@ def article_post_save(created, instance, *args, **kwargs):
 
 
 post_save.connect(article_post_save, sender=Article)
+
+
+def meal_added_rec(*args, **kwargs):
+    print('added', args, kwargs)
+
+
+meal_added.connect(meal_added_rec)
+
+
+def meal_removed_rec(*args, **kwargs):
+    print('removed', args, kwargs)
+
+
+meal_removed.connect(meal_removed_rec)
