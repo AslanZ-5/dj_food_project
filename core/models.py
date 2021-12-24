@@ -7,6 +7,7 @@ from django.db.models import Q
 from .utile import slugify_instance_title
 from django.urls import reverse
 from meals.signals import meal_added, meal_removed
+from meals.meals_calc import generate_meal_queue_totals
 
 
 class ArticleQuerySet(models.QuerySet):
@@ -63,8 +64,11 @@ def article_post_save(created, instance, *args, **kwargs):
 post_save.connect(article_post_save, sender=Article)
 
 
-def meal_added_rec(*args, **kwargs):
+def meal_added_rec(instance,sender,*args, **kwargs):
     print('added', args, kwargs)
+    user = instance.user
+    data = generate_meal_queue_totals(user)
+    print(data)
 
 
 meal_added.connect(meal_added_rec)
