@@ -4,12 +4,12 @@
 <h1>recipes list</h1>
 <h2><a href="{% url 'create' %}"> Add new</a></h2>
 {% for i in object_list %}
-<ul>
-    <li><a href="{% url 'detail' i.id %}">{{ i.name }}</a></li>
-</ul>
+<div><a href="{% url 'detail' i.id %}">{{ i.name }}</a>
+
+<div hx-get="{% url 'meal-toggle' recipe_id=i.id %}" hx-trigger="revealed"></div>
 
 
-
+</div>
 
 {% endfor %}
 
