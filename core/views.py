@@ -1,9 +1,6 @@
 from django.shortcuts import render
 from django.shortcuts import redirect
-from django.db.models import Q
-from django.http import HttpResponse
 from .models import Article
-from django.template.loader import render_to_string
 from django.contrib.auth.decorators import login_required
 from .forms import ArticleForm
 import random
